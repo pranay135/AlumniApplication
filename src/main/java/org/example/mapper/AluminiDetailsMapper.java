@@ -25,7 +25,6 @@ public class AluminiDetailsMapper {
       aluminiDetails.setState(aluminiDetailsDTO.getState());
       aluminiDetails.setCountry(aluminiDetailsDTO.getCountry());
       aluminiDetails.setImageUrl(aluminiDetailsDTO.getImageUrl());
-//      aluminiDetails.setUsers();
      return aluminiDetails;
   }
 

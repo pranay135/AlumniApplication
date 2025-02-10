@@ -6,6 +6,7 @@ import org.example.customExceptions.OtpDoesNotMatchException;
 import org.example.customExceptions.UserAlreadyExistException;
 import org.example.customExceptions.UserNotFoundException;
 import org.example.dto.UserDto;
+import org.example.entity.AluminiDetails;
 import org.example.entity.Users;
 import org.example.repository.IUserRepository;
 import org.example.service.IUserService;
@@ -28,6 +29,7 @@ import java.util.Objects;
 
 
 import static org.example.mapper.UserMapper.toUserEntity;
+import static org.example.mapper.AluminiDetailsMapper.toAluminiDetails;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -46,6 +48,7 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     TemplateEngine templateEngine;
+
 
 
     @Override
