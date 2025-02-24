@@ -2,10 +2,9 @@ package org.example.mapper;
 
 import org.example.dto.AluminiDetailsDto;
 import org.example.entity.AluminiDetails;
-import org.example.entity.Users;
+
 
 public class AluminiDetailsMapper {
-
 
   public static AluminiDetails toAluminiDetails(AluminiDetailsDto aluminiDetailsDTO){
       AluminiDetails aluminiDetails = new AluminiDetails();
@@ -25,7 +24,8 @@ public class AluminiDetailsMapper {
       aluminiDetails.setState(aluminiDetailsDTO.getState());
       aluminiDetails.setCountry(aluminiDetailsDTO.getCountry());
       aluminiDetails.setImageUrl(aluminiDetailsDTO.getImageUrl());
-     return aluminiDetails;
+//      aluminiDetails.setUsers();
+      return aluminiDetails;
   }
 
  public static AluminiDetailsDto toAluminiDetailsDto(AluminiDetails aluminiDetails){

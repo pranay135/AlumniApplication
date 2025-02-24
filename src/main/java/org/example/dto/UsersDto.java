@@ -2,7 +2,6 @@ package org.example.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @NoArgsConstructor
@@ -10,7 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class UserDto {
+public class UsersDto {
 
     private long id;
     @NotNull(message = "First Name Cannot Be Blank")

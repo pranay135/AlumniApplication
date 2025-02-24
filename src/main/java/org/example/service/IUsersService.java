@@ -1,11 +1,10 @@
 package org.example.service;
 
-import org.example.dto.LoginDto;
-import org.example.dto.UserDto;
+import org.example.dto.UsersDto;
 
-public interface IUserService {
+public interface IUsersService {
 
-    void userRegistration(UserDto userDto);
+    void userRegistration(UsersDto usersDto);
 
 //    String verify(LoginDto loginDto);
 

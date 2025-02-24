@@ -5,13 +5,12 @@ import org.example.dto.AluminiDetailsDto;
 import org.example.entity.AluminiDetails;
 import org.example.entity.Users;
 import org.example.mapper.AluminiDetailsMapper;
-import org.example.mapper.UserMapper;
 import org.example.repository.IAluminiRepository;
-import org.example.repository.IUserRepository;
+import org.example.repository.IUsersRepository;
 import org.example.service.IAluminiDetailsService;
-import org.example.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
@@ -26,12 +25,15 @@ public class AluminiDetailsServiceImpl implements IAluminiDetailsService {
     @Autowired
     IAluminiRepository iAluminiRepository;
 
+    @Autowired
+    IUsersRepository iUsersRepository;
 
     @Override
     public void addAluminiDetails(AluminiDetailsDto aluminiDetailsDTO) {
         AluminiDetails aluminiDetails = toAluminiDetails(aluminiDetailsDTO);
         iAluminiRepository.save(aluminiDetails);
     }
+
 
     //    @Override
 //    public List<AluminiDetailsDTO> getAllAluminiDetails() {

@@ -1,6 +1,6 @@
 package org.example.constants;
 
-public class UserConstants {
+public class UsersConstants {
     public static final String BASE_ENDPOINT = "/api/v1/auth/";
     public static final String REGISTRATION_ALUMINI = "registration";
     public static final String LOGIN_ALUMINI = "login";
