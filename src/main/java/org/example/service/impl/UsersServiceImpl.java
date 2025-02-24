@@ -5,11 +5,10 @@ import jakarta.mail.internet.MimeMessage;
 import org.example.customExceptions.OtpDoesNotMatchException;
 import org.example.customExceptions.UserAlreadyExistException;
 import org.example.customExceptions.UserNotFoundException;
-import org.example.dto.UserDto;
-import org.example.entity.AluminiDetails;
+import org.example.dto.UsersDto;
 import org.example.entity.Users;
-import org.example.repository.IUserRepository;
-import org.example.service.IUserService;
+import org.example.repository.IUsersRepository;
+import org.example.service.IUsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -19,20 +18,15 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 
-import static org.example.mapper.UserMapper.toUserEntity;
-import static org.example.mapper.AluminiDetailsMapper.toAluminiDetails;
+import static org.example.mapper.UsersMapper.toUserEntity;
 
 @Service
-public class UserServiceImpl implements IUserService {
+public class UsersServiceImpl implements IUsersService {
 
     @Autowired
     JwtService jwtService;
@@ -41,7 +35,7 @@ public class UserServiceImpl implements IUserService {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    IUserRepository iUserRepository;
+    IUsersRepository iUsersRepository;
 
     @Autowired
     JavaMailSender javaMailSender;
@@ -52,16 +46,16 @@ public class UserServiceImpl implements IUserService {
 
 
     @Override
-    public void userRegistration(UserDto userDto) {
-        if(emailIdExists(userDto.getEmailId())){
-            throw new UserAlreadyExistException("User Already Exist With Entered EmailId", "409 : "  + userDto.getEmailId());
+    public void userRegistration(UsersDto usersDto) {
+        if(emailIdExists(usersDto.getEmailId())){
+            throw new UserAlreadyExistException("User Already Exist With Entered EmailId", "409 : "  + usersDto.getEmailId());
         }
-        Users users1 = toUserEntity(userDto);
-        iUserRepository.save(users1);
+        Users users1 = toUserEntity(usersDto);
+        iUsersRepository.save(users1);
     }
 
     private boolean emailIdExists(String emailId){
-        return iUserRepository.findByEmailId(emailId).isPresent();
+        return iUsersRepository.findByEmailId(emailId).isPresent();
     }
 
 
@@ -78,14 +72,14 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void sendOtp(String emailId) {
-        Users users = iUserRepository.findByEmailId(emailId)
+        Users users = iUsersRepository.findByEmailId(emailId)
        .orElseThrow(() -> new UserNotFoundException("User Not Found With This EmailId", "404" + emailId));
         try{
             String otp = generateOtp();
             sendOtpToEmail(emailId, otp);
             users.setOtp(otp);
             users.setOtpGeneratedTime(LocalDateTime.now());
-            iUserRepository.save(users);
+            iUsersRepository.save(users);
         }
         catch (MessagingException messagingException){
             throw new RuntimeException("unable to send otp");
@@ -126,14 +120,14 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public String verifyAccount(String emailId, String otp) {
-         Users users = iUserRepository.findByEmailId(emailId)
+         Users users = iUsersRepository.findByEmailId(emailId)
         .orElseThrow(() -> new UserNotFoundException("User Not Found With This EmailId", "404" + emailId));
 
          if(users.getOtp().equals(otp) && Duration.between(users.getOtpGeneratedTime(),
             LocalDateTime.now()).getSeconds() < (10 * 60))
          {
              users.setActive(true);
-             iUserRepository.save(users);
+             iUsersRepository.save(users);
              String token = jwtService.generateToken(emailId);
              return "OTP verified you can login \n JWT Token : " + token;
          }

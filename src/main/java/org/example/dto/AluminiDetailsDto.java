@@ -3,6 +3,7 @@ package org.example.dto;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.*;
+import org.example.entity.Users;
 import org.example.utility.Gender;
 import org.example.utility.MaritalStatus;
 
@@ -28,6 +29,4 @@ public class AluminiDetailsDto {
     private String state;
     private String country;
     private String imageUrl;
-
-
 }

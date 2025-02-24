@@ -19,8 +19,8 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(new Info().title("Alumini Application Service"))
                 .addSecurityItem(new SecurityRequirement().addList("AluminiApplicationScheme"))
-                .components(new Components().addSecuritySchemes("AluminiApplicationScheme", new SecurityScheme()
-                .name("Alumini Application").type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")));
+                .components(new Components().addSecuritySchemes("AluminiApplicationScheme", new SecurityScheme()));
+//                .name("Alumini Application").type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")));
 
     }
 }

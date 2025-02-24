@@ -29,4 +29,5 @@ public class Users {
     private boolean active;
     private String otp;
     private LocalDateTime otpGeneratedTime;
+
 }
