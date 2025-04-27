@@ -12,7 +12,7 @@ import java.util.Optional;
 
 
 @Repository
-public interface IAluminiRepository extends JpaRepository<AluminiDetails, Long > {
+public interface  IAluminiRepository extends JpaRepository<AluminiDetails, Long > {
 
   Optional<AluminiDetails> findById(Long id);
 

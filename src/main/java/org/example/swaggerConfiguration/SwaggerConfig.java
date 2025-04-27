@@ -20,7 +20,9 @@ public class SwaggerConfig {
                 .info(new Info().title("Alumini Application Service"))
                 .addSecurityItem(new SecurityRequirement().addList("AluminiApplicationScheme"))
                 .components(new Components().addSecuritySchemes("AluminiApplicationScheme", new SecurityScheme()));
-//                .name("Alumini Application").type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")));
+  //              .name("Alumini Application").type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")));
 
     }
 }
+
+// Swagger URL :- http://localhost:8080/swagger-ui/index.html
