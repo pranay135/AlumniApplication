@@ -5,6 +5,7 @@ import org.example.dto.AluminiDetailsDto;
 import org.example.entity.AluminiDetails;
 import org.example.entity.Users;
 import org.example.mapper.AluminiDetailsMapper;
+import org.example.projection.UsersProjection;
 import org.example.repository.IAluminiRepository;
 import org.example.repository.IUsersRepository;
 import org.example.service.IAluminiDetailsService;
