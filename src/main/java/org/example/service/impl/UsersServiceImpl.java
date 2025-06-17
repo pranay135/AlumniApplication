@@ -9,6 +9,7 @@ import org.example.dto.UsersDto;
 import org.example.entity.Users;
 import org.example.repository.IUsersRepository;
 import org.example.service.IUsersService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -22,8 +23,6 @@ import java.security.SecureRandom;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-
-import static org.example.mapper.UsersMapper.toUserEntity;
 
 @Service
 public class UsersServiceImpl implements IUsersService {
@@ -43,6 +42,8 @@ public class UsersServiceImpl implements IUsersService {
     @Autowired
     TemplateEngine templateEngine;
 
+    @Autowired
+    ModelMapper modelMapper;
 
 
     @Override
@@ -50,8 +51,8 @@ public class UsersServiceImpl implements IUsersService {
         if(emailIdExists(usersDto.getEmailId())){
             throw new UserAlreadyExistException("User Already Exist With Entered EmailId", "409 : "  + usersDto.getEmailId());
         }
-        Users users1 = toUserEntity(usersDto);
-        iUsersRepository.save(users1);
+        Users users = this.modelMapper.map(usersDto, Users.class);
+        iUsersRepository.save(users);
     }
 
     private boolean emailIdExists(String emailId){

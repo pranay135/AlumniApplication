@@ -5,9 +5,11 @@ import org.example.dto.AluminiDetailsDto;
 import org.example.entity.AluminiDetails;
 import org.example.entity.Users;
 import org.example.mapper.AluminiDetailsMapper;
+import org.example.projection.UsersProjection;
 import org.example.repository.IAluminiRepository;
 import org.example.repository.IUsersRepository;
 import org.example.service.IAluminiDetailsService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
@@ -16,8 +18,6 @@ import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.*;
-
-import static org.example.mapper.AluminiDetailsMapper.toAluminiDetails;
 
 @Service
 public class AluminiDetailsServiceImpl implements IAluminiDetailsService {
@@ -28,9 +28,12 @@ public class AluminiDetailsServiceImpl implements IAluminiDetailsService {
     @Autowired
     IUsersRepository iUsersRepository;
 
+    @Autowired
+    ModelMapper modelMapper;
+
     @Override
     public void addAluminiDetails(AluminiDetailsDto aluminiDetailsDTO) {
-        AluminiDetails aluminiDetails = toAluminiDetails(aluminiDetailsDTO);
+        AluminiDetails aluminiDetails = this.modelMapper.map(aluminiDetailsDTO, AluminiDetails.class);
         iAluminiRepository.save(aluminiDetails);
     }
 
@@ -124,7 +127,7 @@ public class AluminiDetailsServiceImpl implements IAluminiDetailsService {
         if(stringOptional.isPresent()) {
             Page<AluminiDetails> aluminiDetailsList = iAluminiRepository.searchAluminiDetails(search, pageable);
             List<AluminiDetails> detailsList = aluminiDetailsList.getContent();
-            List<AluminiDetailsDto> aluminiDetailsDtoList = convertAluminiDetailsEntityListToAluminiDetailsDtoList(detailsList);
+            List<AluminiDetailsDto> aluminiDetailsDtoList =  convertAluminiDetailsEntityListToAluminiDetailsDtoList(detailsList);
             return aluminiDetailsDtoList;
         }
             Page<AluminiDetails> aluminiDetailsPage = iAluminiRepository.getlistOfAluminiDetails(pageable);

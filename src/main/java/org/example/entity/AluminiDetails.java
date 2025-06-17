@@ -12,7 +12,7 @@ import org.example.utility.MaritalStatus;
 @ToString
 @Builder
 @Entity
-@Table(name = "aluminiDetails")
+@Table(name = "alumniDetails")
 public class AluminiDetails {
 
     @Id
