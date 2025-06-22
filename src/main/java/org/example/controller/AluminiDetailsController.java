@@ -22,16 +22,16 @@ public class AluminiDetailsController {
 
     // ENDPOINT : localhost:8080/api/v1/alumini/add
     @PostMapping(AluminiDetailsConstants.ADD_ALUMINI)
-    public ResponseEntity<?> addAluminiDetails(@Valid @RequestBody AluminiDetailsDto aluminiDetailsDTO){
-        iAluminiDetailsService.addAluminiDetails(aluminiDetailsDTO);
+    public ResponseEntity<?> addAluminiDetails(@Valid @RequestBody AluminiDetailsDto aluminiDetailsDTO, @PathVariable Long userId){
+        iAluminiDetailsService.addAluminiDetails(aluminiDetailsDTO, userId);
       return new ResponseEntity<>("Alumini Details Added Successfully", HttpStatus.CREATED);
     }
 
-//    // ENDPOINT : localhost:8080/api/v1/alumini/get/all
-//    @GetMapping(AluminiDetailsConstants.GET_ALL_ALUMINI)
-//    public ResponseEntity<List<AluminiDetailsDTO>> getAllAluminiDetails(){
-//        return ResponseEntity.ok(iAluminiDetailsService.getAllAluminiDetails());
-//    }
+    // ENDPOINT : localhost:8080/api/v1/alumini/get/all
+    @GetMapping(AluminiDetailsConstants.GET_ALL_ALUMINI)
+    public ResponseEntity<List<AluminiDetailsDto>> getAllAluminiDetails(){
+        return ResponseEntity.ok(iAluminiDetailsService.getAllAluminiDetails());
+    }
 
     // ENDPOINT : localhost:8080/api/v1/alumini/delete/{id}
     @DeleteMapping(AluminiDetailsConstants.DELETE_ALUMINI)
@@ -47,11 +47,11 @@ public class AluminiDetailsController {
         return new ResponseEntity<>("Record Updated Successfully", HttpStatus.OK);
     }
 
-//    // ENDPOINT : localhost:8080/api/v1/alumini/get/{id}
-//    @GetMapping(AluminiDetailsConstants.GET_BY_ID)
-//    public ResponseEntity<AluminiDetailsDto> getAluminiDetailsById(@PathVariable Long id){
-//        return ResponseEntity.ok(iAluminiDetailsService.getAluminiDetailsById(id));
-//    }
+    // ENDPOINT : localhost:8080/api/v1/alumini/get/{id}
+    @GetMapping(AluminiDetailsConstants.GET_BY_ID)
+    public ResponseEntity<AluminiDetailsDto> getAluminiDetailsById(@PathVariable Long id){
+        return ResponseEntity.ok(iAluminiDetailsService.getAluminiDetailsById(id));
+    }
 
     // ENDPOINT : localhost:8080/api/v1/alumini/get/stats
     @GetMapping(AluminiDetailsConstants.GET_STATS)

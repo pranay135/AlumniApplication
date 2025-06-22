@@ -29,6 +29,7 @@ public class AluminiDetailsDto {
     private String state;
     private String country;
     private String imageUrl;
+    private Users users;
 
 
 }

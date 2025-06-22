@@ -9,15 +9,15 @@ import java.util.Map;
 
 public interface IAluminiDetailsService {
 
-    void addAluminiDetails(AluminiDetailsDto aluminiDetailsDTO);
+    void addAluminiDetails(AluminiDetailsDto aluminiDetailsDTO, Long userId);
 
-//    List<AluminiDetailsDTO> getAllAluminiDetails();
+    List<AluminiDetailsDto> getAllAluminiDetails();
 
     void deleteAluminiDetails(Long id);
 
     AluminiDetails updateAluminiDetails(Long id, Map<String, Object> fields);
 
-//    AluminiDetailsDto getAluminiDetailsById(Long id);
+    AluminiDetailsDto getAluminiDetailsById(Long id);
 
     Map<String, Integer> getProfessionStats();
 
