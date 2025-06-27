@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface IAluminiDetailsService {
 
-    void addAluminiDetails(AluminiDetailsDto aluminiDetailsDTO, Long userId);
+    AluminiDetailsDto addAluminiDetails(AluminiDetailsDto aluminiDetailsDTO, Long userId);
 
     List<AluminiDetailsDto> getAllAluminiDetails();
 

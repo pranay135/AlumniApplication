@@ -12,9 +12,11 @@ import org.example.utility.MaritalStatus;
 @Getter
 @Setter
 @ToString
+@Builder
 public class AluminiDetailsDto {
 
     private long id;
+    private UsersDto users;
     private String yearOfPassout;
     private String highestQualification;
     private String specialization;
@@ -29,7 +31,4 @@ public class AluminiDetailsDto {
     private String state;
     private String country;
     private String imageUrl;
-    private Users users;
-
-
 }
