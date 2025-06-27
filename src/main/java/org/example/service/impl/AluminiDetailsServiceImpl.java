@@ -1,7 +1,9 @@
 package org.example.service.impl;
 
+import jakarta.persistence.EntityManager;
 import org.example.customExceptions.UserNotFoundException;
 import org.example.dto.AluminiDetailsDto;
+import org.example.dto.UsersDto;
 import org.example.entity.AluminiDetails;
 import org.example.entity.Users;
 import org.example.repository.IAluminiRepository;
@@ -11,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
@@ -29,14 +32,18 @@ public class AluminiDetailsServiceImpl implements IAluminiDetailsService {
     @Autowired
     ModelMapper modelMapper;
 
+
     @Override
-    public void addAluminiDetails(AluminiDetailsDto aluminiDetailsDTO, Long userId) {
+    public AluminiDetailsDto addAluminiDetails(AluminiDetailsDto aluminiDetailsDTO, Long userId) {
         Optional<Users> optionalUsers = iUsersRepository.findById(userId);
         if(optionalUsers.isPresent()){
             Users users = optionalUsers.get();
-            aluminiDetailsDTO.setUsers(users);
+            UsersDto usersDto = modelMapper.map(users, UsersDto.class);
+            aluminiDetailsDTO.setUsers(usersDto);
             AluminiDetails aluminiDetails = this.modelMapper.map(aluminiDetailsDTO, AluminiDetails.class);
             iAluminiRepository.save(aluminiDetails);
+            AluminiDetailsDto aluminiDetailsDto = this.modelMapper.map(aluminiDetails, AluminiDetailsDto.class);
+            return aluminiDetailsDto;
 
         }
         else {
