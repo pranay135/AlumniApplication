@@ -5,6 +5,7 @@ import jakarta.mail.internet.MimeMessage;
 import org.example.customExceptions.OtpDoesNotMatchException;
 import org.example.customExceptions.UserAlreadyExistException;
 import org.example.customExceptions.UserNotFoundException;
+import org.example.dto.LoginDto;
 import org.example.dto.UsersDto;
 import org.example.entity.Users;
 import org.example.repository.IUsersRepository;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -60,15 +63,15 @@ public class UsersServiceImpl implements IUsersService {
     }
 
 
-//    @Override
-//    public String verify(LoginDto loginDto) {
-//        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmailId(), loginDto.getPassword()));
-//        if (authentication.isAuthenticated()) {
-//            return jwtService.generateToken(loginDto.getEmailId());
-//        } else {
-//            return "fail";
-//        }
-//    }
+    @Override
+    public String verify(LoginDto loginDto) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmailId(), loginDto.getPassword()));
+        if (authentication.isAuthenticated()) {
+            return jwtService.generateToken(loginDto.getEmailId());
+        } else {
+            return "fail";
+        }
+    }
 
 
     @Override
@@ -138,20 +141,20 @@ public class UsersServiceImpl implements IUsersService {
 //        return "Please regenerate otp and try again";
     }
 
-//    @Override
-//    public String regenerateOtp(String emailId) {
-//        Users user = iUserRepository.findByEmailId(emailId)
-//       .orElseThrow(() -> new RuntimeException("User not found with this email: " + emailId));
-//        String otp = generateOtp();
-//        try{
-//            sendOtpToEmail(emailId, otp);
-//        }catch (MessagingException e) {
-//            throw new RuntimeException("Unable to send otp please try again");
-//        }
-//        user.setOtp(otp);
-//        user.setOtpGeneratedTime(LocalDateTime.now());
-//        iUserRepository.save(user);
-//        return "Email sent... please verify account within 1 minute";
-//    }
+    @Override
+    public String regenerateOtp(String emailId) {
+        Users user = iUsersRepository.findByEmailId(emailId)
+       .orElseThrow(() -> new RuntimeException("User not found with this email: " + emailId));
+        String otp = generateOtp();
+        try{
+            sendOtpToEmail(emailId, otp);
+        }catch (MessagingException e) {
+            throw new RuntimeException("Unable to send otp please try again");
+        }
+        user.setOtp(otp);
+        user.setOtpGeneratedTime(LocalDateTime.now());
+        iUsersRepository.save(user);
+        return "Email sent... please verify account within 1 minute";
+    }
 
 }

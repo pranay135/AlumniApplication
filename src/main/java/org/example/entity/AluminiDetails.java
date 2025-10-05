@@ -7,9 +7,7 @@ import org.example.utility.MaritalStatus;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 @Builder
 @Entity
 @Table(name = "alumniDetails")
